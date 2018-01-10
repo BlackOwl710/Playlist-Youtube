@@ -9,5 +9,8 @@ $bdd = new PDO ('mysql:host='.$host.';dbname='.$db_name.';charset=utf8', $user, 
 $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 return $bdd;
 }
-
+function api_key(){
+$api_key = 'AIzaSyAU4XxPFIZl7x4LfZuIDZVUVOsyzEewns0';
+return $api_key;
+}
 ?>

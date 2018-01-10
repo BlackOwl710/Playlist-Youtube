@@ -9,7 +9,7 @@
 </head>
 <body>
       <?php
-include __DIR__ . '/bdd/getco.php';
+include (__DIR__ . '/bdd/getco.php');
 $bdd = get_co();
 
 $video_url = $bdd->prepare('SELECT(url) FROM vids WHERE id=:id');
@@ -71,6 +71,10 @@ echo ('<br>');
         }
       </script>
 
+<form action='forms/addVid.php' method='POST'>
+    <input name='insertVid' type='text' >
+    <input type="submit">
+  </form>
   <?php
 
 $bdd = get_co();
@@ -82,12 +86,14 @@ $vids = $bdd->prepare('SELECT * FROM vids');
 $vids->execute();
 $vids = $vids->fetchAll();
 
+
+
 if (!empty($vids)) {
     foreach ($vids as $data) {
         ?>
 
   <form class='addDelUpdt' action='index.php' method='POST'>
-    <input name='retrivedVid' type='text' value='<?php echo 'https://www.youtube.com/watch?v=' . $data['url']; ?>'>
+    <input name='retrivedVid' type='text' value='<?php echo 'https://www.youtube.com/watch?v='.$data['url']; ?>'>
     <input name='retrivedId' type='text' value='<?php echo $data['id']; ?>'>
     <input type="submit">
   </form>
