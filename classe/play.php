@@ -1,6 +1,6 @@
 <?php
 
-    include (__DIR__.'/../bdd/getco.php');
+    include_once (__DIR__.'/../bdd/getco.php');
     
     $bdd = get_co();
     
@@ -9,7 +9,10 @@
                'id'=>$_POST['retrivedId']
            ));
            var_dump($video_url);
+           echo ('<br>');
+           $video_url= $video_url->fetch();
+           $video_url= $video_url["url"];
            
-    // header('Location: ../index.php');
+    header('Location: ../index.php');
 
 ?>
