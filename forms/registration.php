@@ -18,5 +18,7 @@ $user->execute(array(
 ));
 }
 
+}
+
 header('Location: ../form.php');
 ?>
