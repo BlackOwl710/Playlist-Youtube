@@ -10,8 +10,9 @@ $todos->execute(array(
 ));
 
 $api_key = api_key();
-$vid_info = json_decode(file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=id,snippet&id=$getvid&key=$api_key"));
-var_dump($vid_info);
-// header('Location: ../index.php');
+// $vid_info = json_decode(file_get_contents("https://www.googleapis.com/youtube/v3/videos?part=id,snippet&id=$getvid&key=$api_key"));
+// var_dump($vid_info);
+// $vid_title = $vid_info[[]]
+header('Location: ../index.php');
 
 ?>

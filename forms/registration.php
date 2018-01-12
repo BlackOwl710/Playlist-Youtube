@@ -8,6 +8,7 @@ $get_pass= $_POST['pass'];
 $get_rw_pass= $_POST['rw_pass'];
 
 $bdd=get_co();
+if ($get_pass === $get_rw_pass){
 $user= $bdd->prepare('INSERT INTO users(user_name, user_surname, user_login, passwd) VALUES (:user_name, :user_sname, :user_login, :passwd)');
 $user->execute(array(
     'user_name'=>$get_name, 
@@ -15,6 +16,7 @@ $user->execute(array(
     'user_login'=>$get_log,
     'passwd'=>$get_pass
 ));
+}
 
 header('Location: ../form.php');
 ?>

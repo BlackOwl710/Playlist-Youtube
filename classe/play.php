@@ -1,6 +1,5 @@
 <?php
-
-    include_once (__DIR__.'/../bdd/getco.php');
+    include (__DIR__.'/../bdd/getco.php');
     
     $bdd = get_co();
     
@@ -12,7 +11,11 @@
            echo ('<br>');
            $video_url= $video_url->fetch();
            $video_url= $video_url["url"];
-           
-    header('Location: ../index.php');
 
+            $tab_id = $bdd->prepare ('SELECT (url) FROM vids');
+            $tab_id->execute(array());
+            echo($tab_id);
+           
+           
+    header('Location: /../index.php');
 ?>
