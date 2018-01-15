@@ -13,8 +13,8 @@
 <body>
 <nav>
     <a href='#'><i class='fas fa-home'></i></a>
-    <a href='#'><i class='fas fa-home'></i>Register</a>
-    <a href='#'><i class='fas fa-home'></i>Log In</a>
+    <a href='#'><i class='fa fa-address-card'></i>Register</a>
+    <a href='#'><i class="fa fa-user" aria-hidden="true"></i>Log In</a>
 </nav>
 <?php
 include __DIR__ . '/bdd/getco.php';
@@ -125,9 +125,9 @@ if (!empty($vids)) {
                             <div class='flex'>
                                 <img src=<?php echo 'http://img.youtube.com/vi/' . $data['url'].'/3.jpg';?> alt="">
                                 <p class='retrivedVid'><?php echo $data['title']; ?></p>
-                                <p type='hidden'class='retrivedId'><?php echo $data['id']; ?></p>
+                                <p class='retrivedId'><?php echo $data['id']; ?></p>
                                 <form name='play' action= 'classe/play.php'method= 'POST'>
-                                   <input type="submit">
+                                   <button type="submit"><i class="fa fa-play" aria-hidden="true"></i></button>
                                 </form>
                             </div>
 
