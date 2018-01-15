@@ -5,30 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script>
     <link rel="stylesheet" href="styles.css" type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
     <title>To watch</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Home</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#"> Connexion <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item my-2 my-lg-0">
-        <a class="nav-link" href="form.php">S'enregistrer</a>
-      </li>
-    </ul>
-  </div>
+<nav>
+    <a href='#'><i class='fas fa-home'></i></a>
+    <a href='#'><i class='fas fa-home'></i>Register</a>
+    <a href='#'><i class='fas fa-home'></i>Log In</a>
 </nav>
 <?php
-include __DIR__.'/bdd/getco.php';
+include __DIR__ . '/bdd/getco.php';
 $bdd = get_co();
 
 // $video_url = $bdd->prepare('SELECT(url) FROM vids WHERE id=:id');
@@ -100,46 +89,68 @@ function stopVideo() {
 </script>
 
 <div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-7 addVid">
+            <form class='flex' action='forms/addVid.php' method='POST'>
+                <div class="input-group mb-1">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-secondary" type="submit">Button</button>
+                    </div>
+                    <input class='add'name='insertVid' type='text' class="form-control addvtxt" placeholder="" aria-label="" aria-describedby="basic-addon1">
+                </div>
+            </form>
+        </div>
+    </div>            
+
         <div class="row">
-            <div class="col-sm-8">
+        <div class="col-sm-7">
                 <!--player YT -->
-                <form action='forms/addVid.php' method='POST'>
-                    <input name='insertVid' type='text' >
-                    <input type="submit">
-                </form>
-                <div id="player"></div>        
+                
+                <div id="player"></div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-5 playlist">
                 <?php
 
-                    $bdd = get_co();
+$bdd = get_co();
 
-                    // $vids_id_user = $bdd->query('SELECT id FROM users');
-                    // $vids= $bdd->query('SELECT * FROM vids WHERE user_id = $vids_id_user');
+// $vids_id_user = $bdd->query('SELECT id FROM users');
+// $vids= $bdd->query('SELECT * FROM vids WHERE user_id = $vids_id_user');
 
-                    $vids = $bdd->prepare('SELECT * FROM vids');
-                    $vids->execute();
-                    $vids = $vids->fetchAll();            
+$vids = $bdd->prepare('SELECT * FROM vids');
+$vids->execute();
+$vids = $vids->fetchAll();
 
-                    if (!empty($vids)) {
-                        foreach ($vids as $data) {?>
-                        
-                            <form class='d-flex flex-row' action='index.php' method='POST'>
-                                <input name='retrivedVid' type='text' value='<?php echo 'https://www.youtube.com/watch?v=' . $data['url']; ?>'>
-                                <input name='retrivedId' type='hidden' value='<?php echo $data['id']; ?>'>
-                            </form>
-                        
-                        <form name='play' action= 'classe/play.php'method= 'POST'>
-                            <input type="submit">
-                        </form>
-                        
-                    
+if (!empty($vids)) {
+    foreach ($vids as $data) {?>
+                            <div class='flex'>
+                                <img src=<?php echo 'http://img.youtube.com/vi/' . $data['url'].'/3.jpg';?> alt="">
+                                <p class='retrivedVid'><?php echo $data['title']; ?></p>
+                                <p type='hidden'class='retrivedId'><?php echo $data['id']; ?></p>
+                                <form name='play' action= 'classe/play.php'method= 'POST'>
+                                   <input type="submit">
+                                </form>
+                            </div>
+
+
 
 
                 <?php }}?>
             </div>
         </div>
-</div>  
+</div>
+<footer class='footer'>
+<div class="container">
+<p>
+    Réseaux sociaux:
+
+    <i class="fab fa-linkedin fa-2x"></i>
+    <i class="fab fa-facebook-square fa-2x"></i>
+    <i class="fab fa-google-plus-square fa-2x"></i>
+
+</p>
+
+</div>
+</footer>
 <script src='./JS/yt_api.js'></script>
 </body>
 
