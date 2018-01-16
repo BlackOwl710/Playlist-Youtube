@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +14,10 @@
 
 <body>
 <nav>
+<div class='navbar'>
     <a href='index.php'><i class='fas fa-home'></i></a>
     <a href='form.php'><i class='fa fa-address-card'></i>Register</a>
-    
+</div>  
 </nav>
     <div class="container">
         <div class="row">
@@ -27,7 +29,7 @@
                     <label>Log in</label>
                     <input name='log'class="form-control" type='text'>
                     <label>Password</label>
-                    <input name='passwd'class="form-control" type='text'>
+                    <input name='passwd'class="form-control" type='password'>
                     <input type="submit">
                 </form>
             </div>

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,14 +12,25 @@
     <title>To watch</title>
 </head>
 <body>
-    <?php session_start(); ?>
     
 <nav>
-    <a href='index.php'><i class='fas fa-home'></i></a>
-    <?php 
-        if (!empty($_SESSION['id'])){echo "<a href='#'><div id='user'>Vous êtes connectés ".$_SESSION['log']."</div></a>";}
-        else if(empty($_SESSION['id'])) { echo "<a href='log.php'><i class='fa fa-user' aria-hidden='true'></i>Log In</a><a href='form.php'><i class='fa fa-address-card'></i>Register</a>";}
-    ?>
+    <div class='navbar'>
+        <a href='index.php'><i class='fas fa-home'></i></a>
+        <?php 
+            if (!empty($_SESSION['id'])){echo 
+                "<a href='#'><div id='user'>Vous êtes connectés ".$_SESSION['log']."</div></a>
+                <form method='POST' action='forms/delog.php'><button type='submit'><i class='fa fa-times'></i> Log out</button>";}
+            else if(empty($_SESSION['id'])) { echo 
+                "<a href='log.php'><i class='fa fa-user' aria-hidden='true'></i>Log In</a>
+                 <a href='form.php'><i class='fa fa-address-card'></i>Register</a>";}
+        ?>
+        
+            
+        <form class='flex1' action='forms/addVid.php' method='POST'>
+            <input class='add'name='insertVid' type='text' class="form-control" placeholder="Add your video Here" aria-label="" aria-describedby="basic-addon1">
+            <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-plus"></i></button>
+        </form>
+    </div>   
 </nav>
 <?php
 include __DIR__ . '/bdd/getco.php';
@@ -93,15 +105,6 @@ function stopVideo() {
 </script>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-7 addVid">
-            <form class='flex1' action='forms/addVid.php' method='POST'>
-                <input class='add'name='insertVid' type='text' class="form-control" placeholder="Add your video Here" aria-label="" aria-describedby="basic-addon1">
-                <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-plus"></i></button>
-            </form>
-        </div>
-    </div>            
-
         <div class="row">
         <div class="col-sm-7">
                 <!--player YT -->

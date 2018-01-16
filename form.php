@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,29 +6,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.4/js/all.js"></script>
+    <link rel="stylesheet" href="styles.css" type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
-    <title>To watch</title>
+    <title>Purp'tube</title>
+
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Home</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#"> Connexion <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item my-2 my-lg-0">
-        <a class="nav-link" href="#">S'enregistrer</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<nav>
+    <div class='navbar'>
+        <a href='index.php'><i class='fas fa-home'></i></a>
+        <?php 
+            if (!empty($_SESSION['id'])){echo "<a href='#'><div id='user'>Vous êtes connectés ".$_SESSION['log']."</div></a><a href='index.php'><i class='fa fa-times'></i> Log out</a>";}
+            else if(empty($_SESSION['id'])) { echo "<a href='log.php'><i class='fa fa-user' aria-hidden='true'></i>Log In</a><a href='form.php'><i class='fa fa-address-card'></i>Register</a>";}
+        ?>
+    </div>
+<nav>
     <div class="container">
         <div class="row">
             <div class="col-sm">
