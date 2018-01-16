@@ -11,10 +11,14 @@
     <title>To watch</title>
 </head>
 <body>
+    <?php session_start(); ?>
+    
 <nav>
-    <a href='#'><i class='fas fa-home'></i></a>
-    <a href='#'><i class='fa fa-address-card'></i>Register</a>
-    <a href='#'><i class="fa fa-user" aria-hidden="true"></i>Log In</a>
+    <a href='index.php'><i class='fas fa-home'></i></a>
+    <?php 
+        if (!empty($_SESSION['id'])){echo "<a href='#'><div id='user'>Vous êtes connectés ".$_SESSION['log']."</div></a>";}
+        else if(empty($_SESSION['id'])) { echo "<a href='log.php'><i class='fa fa-user' aria-hidden='true'></i>Log In</a><a href='form.php'><i class='fa fa-address-card'></i>Register</a>";}
+    ?>
 </nav>
 <?php
 include __DIR__ . '/bdd/getco.php';
@@ -91,13 +95,9 @@ function stopVideo() {
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-7 addVid">
-            <form class='flex' action='forms/addVid.php' method='POST'>
-                <div class="input-group mb-1">
-                    <div class="input-group-prepend">
-                        <button class="btn btn-outline-secondary" type="submit">Button</button>
-                    </div>
-                    <input class='add'name='insertVid' type='text' class="form-control addvtxt" placeholder="" aria-label="" aria-describedby="basic-addon1">
-                </div>
+            <form class='flex1' action='forms/addVid.php' method='POST'>
+                <input class='add'name='insertVid' type='text' class="form-control" placeholder="Add your video Here" aria-label="" aria-describedby="basic-addon1">
+                <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-plus"></i></button>
             </form>
         </div>
     </div>            
@@ -115,40 +115,36 @@ $bdd = get_co();
 
 // $vids_id_user = $bdd->query('SELECT id FROM users');
 // $vids= $bdd->query('SELECT * FROM vids WHERE user_id = $vids_id_user');
-
+$user_id= $_SESSION['id'];
 $vids = $bdd->prepare('SELECT * FROM vids');
-$vids->execute();
+$vids->execute(array(
+    'id'=> $user_id
+));
 $vids = $vids->fetchAll();
-
 if (!empty($vids)) {
-    foreach ($vids as $data) {?>
-                            <div class='flex'>
+    foreach ($vids as $data) {
+        if($user_id === $data['user_id']){ ?>
+                            <div class='flex2'>
                                 <img src=<?php echo 'http://img.youtube.com/vi/' . $data['url'].'/3.jpg';?> alt="">
                                 <p class='retrivedVid'><?php echo $data['title']; ?></p>
                                 <p class='retrivedId'><?php echo $data['id']; ?></p>
                                 <form name='play' action= 'classe/play.php'method= 'POST'>
-                                   <button type="submit"><i class="fa fa-play" aria-hidden="true"></i></button>
+                                   <button type="submit"><i class="fa fa-play"></i></button>
                                 </form>
                             </div>
 
 
 
 
-                <?php }}?>
+                <?php }}}?>
             </div>
         </div>
 </div>
 <footer class='footer'>
-<div class="container">
-<p>
-    Réseaux sociaux:
-
-    <i class="fab fa-linkedin fa-2x"></i>
-    <i class="fab fa-facebook-square fa-2x"></i>
-    <i class="fab fa-google-plus-square fa-2x"></i>
-
-</p>
-
+<div class="container_foot">
+    <div class='icons'><i class="fab fa-linkedin fa-2x"></i></div>
+    <div class='icons'><i class="fab fa-facebook-square fa-2x"></i></div>
+    <div class='icons'><i class="fab fa-google-plus-square fa-2x"></i></div>
 </div>
 </footer>
 <script src='./JS/yt_api.js'></script>
