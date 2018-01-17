@@ -19,7 +19,7 @@
         <?php 
             if (!empty($_SESSION['id'])){echo 
                 "<a href='#'><div id='user'>Vous êtes connectés ".$_SESSION['log']."</div></a>
-                <form method='POST' action='forms/delog.php'><button type='submit'><i class='fa fa-times'></i> Log out</button>";}
+                <form method='POST' action='forms/delog.php'><button type='submit'><i class='fa fa-times'></i> Log out</button></form>";}
             else if(empty($_SESSION['id'])) { echo 
                 "<a href='log.php'><i class='fa fa-user' aria-hidden='true'></i>Log In</a>
                  <a href='form.php'><i class='fa fa-address-card'></i>Register</a>";}
@@ -46,9 +46,11 @@ $bdd = get_co();
 
 // echo ($video_url);
 // echo ('<br>');
-
-$tab_id = $bdd->prepare('SELECT * FROM vids');
-$tab_id->execute(array());
+$user_id = isset($_SESSION['id']) ? $_SESSION['id'] : '';
+$tab_id = $bdd->prepare('SELECT * FROM vids WHERE user_id =:user_id');
+$tab_id->execute(array(
+    'user_id'=>$user_id 
+));
 $tab_id = $tab_id->fetchAll(PDO::FETCH_COLUMN, 1);
 $tab_id = json_encode($tab_id);
 
@@ -106,40 +108,33 @@ function stopVideo() {
 
 <div class="container-fluid">
         <div class="row">
-        <div class="col-sm-7">
-                <!--player YT -->
-                
-                <div id="player"></div>
-            </div>
-            <div class="col-sm-5 playlist">
-                <?php
+            <div class="col-sm-7">
+                    <!--player YT -->
+                    
+                    <div id="player"></div>
+                </div>
+                <div class="col-sm-5 playlist">
+                    <?php
+                    
+                        $bdd = get_co();
 
-$bdd = get_co();
-
-// $vids_id_user = $bdd->query('SELECT id FROM users');
-// $vids= $bdd->query('SELECT * FROM vids WHERE user_id = $vids_id_user');
-$user_id= $_SESSION['id'];
-$vids = $bdd->prepare('SELECT * FROM vids');
-$vids->execute(array(
-    'id'=> $user_id
-));
-$vids = $vids->fetchAll();
-if (!empty($vids)) {
-    foreach ($vids as $data) {
-        if($user_id === $data['user_id']){ ?>
-                            <div class='flex2'>
-                                <img src=<?php echo 'http://img.youtube.com/vi/' . $data['url'].'/3.jpg';?> alt="">
-                                <p class='retrivedVid'><?php echo $data['title']; ?></p>
-                                <p class='retrivedId'><?php echo $data['id']; ?></p>
-                                <form name='play' action= 'classe/play.php'method= 'POST'>
-                                   <button type="submit"><i class="fa fa-play"></i></button>
-                                </form>
-                            </div>
-
-
-
-
-                <?php }}}?>
+                        $vids = $bdd->prepare('SELECT * FROM vids WHERE user_id = :user_id');
+                        $vids->execute(array(
+                            'user_id'=>$user_id
+                        ));
+                        $vids = $vids->fetchAll();
+                        if (!empty($vids)){
+                            foreach ($vids as $data) {?>
+                                <div class='flex2'>
+                                    <img src=<?php echo 'http://img.youtube.com/vi/' . $data['url'].'/3.jpg';?> alt="">
+                                    <p class='retrivedVid'><?php echo $data['title']; ?></p>
+                                    <p class='retrivedId'><?php echo $data['id']; ?></p>
+                                    <form name='play' action= 'classe/play.php'method= 'POST'>
+                                    <button type="submit"><i class="fa fa-play"></i></button>
+                                    </form>
+                                </div>
+                    <?php }}?>
+                </div>
             </div>
         </div>
 </div>

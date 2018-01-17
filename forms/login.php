@@ -15,10 +15,10 @@ $check_user->execute(array(
 ));
 $check_user = $check_user->fetch();
 $check_user= $check_user['id'];
-
+var_dump($check_user);
 if (!empty($check_user)){
     session_start();
-    $_SESSION['id']= $check_user['id'];
+    $_SESSION['id']= $check_user;
     $_SESSION['log']= $log_client;  
     header('Location: ../index.php');
       
@@ -28,5 +28,5 @@ header('Location: ../log.php');
 }
 
 
-var_dump($check_user);
+
 ?>
